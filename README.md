@@ -34,13 +34,118 @@ However, the remaining flip-flops should be made ready to toggle only when all l
 
 /* Program for flipflops and verify its truth table in quartus using Verilog programming. 
 
-Developed by: RegisterNumber:
-*/
+Developed by:AGASH S
 
-**RTL LOGIC UP COUNTER**
+RegisterNumber:24900273
+DATE:07/12/2024
+
+```
+module SUC (
+
+input clk,//Clock signal
+
+input rst,//Reset signal (active high)
+
+output[3:0] q // 4-bit output
+
+);
+
+wire [3,0]j,k;//J and  K inputs for each JK flipflop
+
+wire [3,0] t;//Toggle signal for each stage
+
+//Generate the toggle signals for each stage
+
+assign j[0] = 1'b1;//First flip-flop togggles on every clock pulse
+
+assign k[0] = 1'b1;
+
+assign t[0] = q[0];//Output of the first flip-flop
+
+assign j[1] = q[0];//Second flip-flop toggles on q[0] high
+
+assign k[1] = q[0];
+
+assign t[1] = q[1];
+
+assign j[2] = q[0] & q[1];//Third flip-flop toggles on q[1:0] high
+
+assign k[2] = q[0] & q[1];
+
+assign t[2] = q[2];
+
+assign j[3] = q[0] & q[1] &q[2];//Fourth flip-flop toggles on q[2:0] high
+
+assign k[3] = q[0] & q[1] & q[2];
+
+assign t[3] = q[3]];
+
+//instantiate 4 JK flip-flops
+
+jk_flipflop jk0 (.clk(clk),.rst(rst),.j(j[0]),.k(k[0]),.q(q[0]));
+
+jk_flipflop jk1 (.clk(clk),.rst(rst),.j(j[1]),.k(k[1]),.q(q[1]));
+
+jk_flipflop jk2 (.clk(clk),.rst(rst),.j(j[2]),.k(k[2]),.q(q[2]));
+
+jk_flipflop jk3 (.clk(clk),.rst(rst),.j(j[3]),.k(k[3]),.q(q[3]));
+
+endmodule
+
+// JK flip-flop module
+
+module jk_flipflop(
+
+input clk,// Clock signal
+
+input rst,// Reset signal (active high)
+
+input j,// J input
+
+input k,// K input
+
+output reg q // Q output
+
+);
+
+always @(posedge clk or posedge rst)begin
+
+if(rst) begin
+
+q <= 1'b0;// Reset output to 0
+
+end else begin
+
+case ({j,k})
+
+2'b00; q <= q;//No change
+
+2'b01; q <= 1'b0;//Reset
+
+2'b10; q <= 1'b1;//Set
+
+2'b11; q <= ~q;//Toggle
+
+endcase
+
+end
+
+end
+
+endmodule
+``` 
+
+RTL LOGIC UP COUNTER**
+
+![Screenshot 2024-12-23 081331](https://github.com/user-attachments/assets/294e10b4-cb68-43da-8b8e-220d6e0a39f9)
+
 
 **TIMING DIAGRAM FOR IP COUNTER**
+![Screenshot 2024-12-23 081355](https://github.com/user-attachments/assets/14f2d644-1b26-4c6e-b836-ee80f463672f)
+
 
 **TRUTH TABLE**
+![Screenshot 2024-12-23 081411](https://github.com/user-attachments/assets/437b9a53-669a-4bff-8382-30545f2be4fe)
 
-**RESULTS**
+
+**RESULTS** The given program for flipflops and verify its truth table in quartus using verilog programming.
